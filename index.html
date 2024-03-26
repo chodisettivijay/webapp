@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Menu</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: skyblue;
+    color: black;
+  }
+  .menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 1200px;
+  }
+  .menu-item {
+    border-radius: 10px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: calc(20% - 40px); /* 20% width with 20px margin on each side */
+    flex-grow: 1; /* Equal width for all menu items */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .menu-item:hover {
+    transform: scale(1.1); /* Add zoom effect on hover */
+  }
+  .menu-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #f2f2f2;
+  }
+  .menu-item-content {
+    padding: 20px;
+  }
+  .menu-item h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .menu-item p {
+    margin: 0;
+    color: #666;
+  }
+  @keyframes zoomIn {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+  @keyframes zoomOut {
+    from {
+      transform: scale(1.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  .zoom-in {
+    animation: zoomIn 0.3s ease;
+  }
+  .zoom-out {
+    animation: zoomOut 0.3s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="menu-container" id="menu-container">
+  
+</div>
+
+<script>
+  const menuContainer = document.getElementById('menu-container');
+
+  // Define menu items
+  const menuItems = [
+    {
+      name: "Spaghetti Carbonara",
+      price: 12.99,
+      description: "Spaghetti pasta with creamy egg sauce, pancetta, and grated Pecorino Romano cheese.",
+      image: "images/Spaghetti Carbonara.jpg"
+    },
+    {
+      name: "Grilled Salmon",
+      price: 16.99,
+      description: "Fresh grilled salmon served with roasted vegetables and lemon butter sauce.",
+      image: "images/Grilled-Salmon-Recipe.jpg"
+    },
+    {
+      name: "Chicken Alfredo",
+      price: 14.99,
+      description: "Grilled chicken breast with fettuccine pasta and creamy Alfredo sauce.",
+      image: "images/Chicken-Alfredo-bowl.jpg"
+    },
+    {
+      name: "Margherita Pizza",
+      price: 10.99,
+      description: "Classic Italian pizza topped with tomato sauce, fresh mozzarella, basil, and olive oil.",
+      image: "images/margherita-pizza-recipe.jpg"
+    },
+    {
+      name: "Caesar Salad",
+      price: 8.99,
+      description: "Crisp romaine lettuce tossed with Caesar dressing, croutons, and Parmesan cheese.",
+      image: "images/caesar-salad-recipe-.jpg"
+    }
+  ];
+
+  // Function to toggle zoom animation on menu item click
+  function toggleZoomAnimation(event) {
+    const menuItem = event.currentTarget;
+    menuItem.classList.add('zoom-in');
+    setTimeout(() => {
+      menuItem.classList.remove('zoom-in');
+      menuItem.classList.add('zoom-out');
+      setTimeout(() => {
+        menuItem.classList.remove('zoom-out');
+      }, 300);
+    }, 300);
+  }
+
+  // Populate menu items
+  menuItems.forEach(item => {
+    const menuItem = document.createElement('div');
+    menuItem.classList.add('menu-item');
+
+    const itemImage = document.createElement('img');
+    itemImage.src = item.image;
+    itemImage.alt = item.name;
+
+    const itemContent = document.createElement('div');
+    itemContent.classList.add('menu-item-content');
+
+    const itemName = document.createElement('h3');
+    itemName.textContent = item.name;
+
+    const itemPrice = document.createElement('p');
+    itemPrice.textContent = `Price: $${item.price.toFixed(2)}`;
+
+    const itemDescription = document.createElement('p');
+    itemDescription.textContent = item.description;
+
+    itemContent.appendChild(itemName);
+    itemContent.appendChild(itemPrice);
+    itemContent.appendChild(itemDescription);
+
+    menuItem.appendChild(itemImage);
+    menuItem.appendChild(itemContent);
+
+    // Add click event listener to toggle zoom animation
+    menuItem.addEventListener('click', toggleZoomAnimation);
+
+    menuContainer.appendChild(menuItem);
+  });
+</script>
+
+</body>
+</html>
